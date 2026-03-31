@@ -1,604 +1,301 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ka">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>პიროვნული მახასიათებლების კითხვარი</title>
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      :root {
-        --color-primary: #2c3e50;
-        --color-secondary: #3498db;
-        --color-accent: #e74c3c;
-        --color-success: #27ae60;
-        --color-light: #ecf0f1;
-        --color-bg: #f8f9fa;
-        --color-text: #2c3e50;
-        --color-border: #bdc3c7;
-        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.15);
-      }
-
-      body {
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        color: var(--color-text);
-        line-height: 1.6;
-        padding: 20px;
-      }
-
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .main-content {
-        background: white;
-        border-radius: 24px;
-        padding: 40px;
-        box-shadow: var(--shadow-lg);
-      }
-
-      .view {
-        display: none;
-      }
-      .view.active {
-        display: block;
-        animation: fadeIn 0.5s ease;
-      }
-
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(10px);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
+
+        :root {
+            --color-primary: #2c3e50;
+            --color-secondary: #3498db;
+            --color-accent: #e74c3c;
+            --color-bg: #f8f9fa;
+            --color-text: #2c3e50;
+            --color-border: #bdc3c7;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.2);
         }
-      }
 
-      /* Intro Screen Styles */
-      .intro-box h2 {
-        color: var(--color-primary);
-        margin-bottom: 20px;
-        border-bottom: 2px solid var(--color-light);
-        padding-bottom: 10px;
-      }
-      .intro-text {
-        font-size: 1rem;
-        color: #444;
-        margin-bottom: 20px;
-        text-align: justify;
-      }
-      .intro-list {
-        margin-left: 20px;
-        margin-bottom: 30px;
-        color: #555;
-      }
-      .intro-list li {
-        margin-bottom: 8px;
-      }
-
-      /* Scale Guide */
-      .scale-guide {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 10px;
-        background: var(--color-bg);
-        padding: 20px;
-        border-radius: 15px;
-        margin-bottom: 30px;
-        border: 1px solid var(--color-border);
-      }
-
-      .guide-item {
-        text-align: center;
-        font-size: 0.75rem;
-        color: var(--color-primary);
-      }
-      .guide-num {
-        display: block;
-        font-weight: bold;
-        font-size: 1.1rem;
-        color: var(--color-secondary);
-      }
-
-      /* Question Area */
-      .question-group {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-      .question-text {
-        font-size: 1.3rem;
-        color: var(--color-primary);
-        margin-bottom: 30px;
-        min-height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 500;
-      }
-
-      .scale-options {
-        display: flex;
-        gap: 15px;
-        justify-content: center;
-      }
-      .scale-btn {
-        width: 55px;
-        height: 55px;
-        border: 2px solid var(--color-border);
-        background: white;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 1.2rem;
-        font-weight: bold;
-        transition: var(--transition);
-      }
-      .scale-btn:hover {
-        border-color: var(--color-secondary);
-        transform: scale(1.1);
-      }
-      .scale-btn.selected {
-        background: var(--color-secondary);
-        color: white;
-        border-color: var(--color-secondary);
-      }
-
-      /* Progress & Nav */
-      .progress-bar {
-        width: 100%;
-        height: 8px;
-        background: var(--color-light);
-        border-radius: 10px;
-        margin-bottom: 10px;
-        overflow: hidden;
-      }
-      .progress-fill {
-        height: 100%;
-        background: var(--color-secondary);
-        transition: width 0.3s;
-      }
-      .navigation {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 40px;
-      }
-
-      .btn {
-        padding: 12px 35px;
-        border-radius: 10px;
-        border: none;
-        cursor: pointer;
-        font-weight: 600;
-        font-size: 1rem;
-        transition: var(--transition);
-      }
-      .btn-primary {
-        background: var(--color-secondary);
-        color: white;
-        width: 100%;
-      }
-      .btn-primary:hover {
-        background: #2980b9;
-        transform: translateY(-2px);
-      }
-      .btn-nav {
-        background: var(--color-light);
-        color: var(--color-primary);
-      }
-
-      /* Results */
-      .results-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-      }
-      .result-card {
-        padding: 20px;
-        border-radius: 15px;
-        border-left: 6px solid var(--color-secondary);
-        background: #fdfdfd;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-      }
-
-      @media (max-width: 600px) {
-        .scale-options {
-          gap: 8px;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
-        .scale-btn {
-          width: 45px;
-          height: 45px;
+
+        .container {
+            width: 100%;
+            max-width: 800px;
         }
+
+        .main-content {
+            background: white;
+            border-radius: 28px;
+            padding: 45px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            position: relative;
+        }
+
+        .view { display: none; }
+        .view.active { display: block; animation: fadeIn 0.6s ease; }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        /* Intro Screen - Full Text Preservation */
+        .intro-box h2 { 
+            color: var(--color-primary); 
+            margin-bottom: 25px; 
+            text-align: center;
+            font-size: 1.5rem;
+            line-height: 1.4;
+        }
+        .intro-text { 
+            font-size: 1rem; 
+            color: #333; 
+            margin-bottom: 20px; 
+            text-align: justify; 
+            white-space: pre-line;
+            line-height: 1.7;
+        }
+        .intro-list { 
+            margin-left: 25px; 
+            margin-bottom: 35px; 
+            color: #333;
+        }
+        .intro-list li { margin-bottom: 10px; }
+
+        /* Fixed Scale Guide at Top */
         .scale-guide {
-          grid-template-columns: 1fr;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            background: #f1f4f8;
+            padding: 18px;
+            border-radius: 18px;
+            margin-bottom: 30px;
+            border: 1px solid var(--color-border);
         }
-        .guide-item {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          text-align: left;
+
+        .guide-item { text-align: center; font-size: 0.75rem; color: var(--color-primary); font-weight: 500; }
+        .guide-num { display: block; font-weight: 800; font-size: 1.1rem; color: var(--color-secondary); margin-bottom: 4px; }
+
+        /* Question Interaction */
+        .question-group { text-align: center; margin-bottom: 35px; }
+        .question-text { 
+            font-size: 1.35rem; 
+            color: var(--color-primary); 
+            margin-bottom: 35px; 
+            min-height: 110px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: 500;
+            padding: 0 15px;
         }
-      }
+        
+        .scale-options { display: flex; gap: 15px; justify-content: center; }
+        .scale-btn {
+            width: 60px; height: 60px; border: 2px solid var(--color-border);
+            background: white; border-radius: 50%; cursor: pointer;
+            font-size: 1.25rem; font-weight: bold; transition: var(--transition);
+        }
+        .scale-btn:hover { border-color: var(--color-secondary); transform: scale(1.15); color: var(--color-secondary); }
+        .scale-btn.selected { background: var(--color-secondary); color: white; border-color: var(--color-secondary); box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4); }
+
+        /* Progress & Navigation */
+        .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--color-secondary); transition: width 0.4s ease; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+
+        .btn { padding: 14px 35px; border-radius: 12px; border: none; cursor: pointer; font-weight: 600; font-size: 1.05rem; transition: var(--transition); }
+        .btn-primary { background: var(--color-secondary); color: white; width: 100%; }
+        .btn-primary:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .btn-nav { background: #f1f4f8; color: var(--color-primary); min-width: 130px; }
+        .btn-nav:hover { background: #e2e8f0; }
+
+        /* Results Display */
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .result-card { padding: 22px; border-radius: 18px; border-left: 6px solid var(--color-secondary); background: #fdfdfd; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+
+        @media (max-width: 600px) {
+            .main-content { padding: 30px 20px; }
+            .scale-btn { width: 48px; height: 48px; font-size: 1.1rem; }
+            .scale-guide { grid-template-columns: 1fr; gap: 8px; }
+            .guide-item { display: flex; align-items: center; gap: 15px; text-align: left; padding: 2px 10px; }
+            .question-text { font-size: 1.15rem; }
+        }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <div class="main-content">
+</head>
+<body>
+
+<div class="container">
+    <div class="main-content">
+        
         <div id="introView" class="view active">
-          <div class="intro-box">
-            <h2>ინფორმირებული გაფრთხილება</h2>
-            <div class="intro-text">
-              <p>
-                წინამდებარე კითხვარი წარმოადგენს თვითანგარიშის (self-report)
-                ინსტრუმენტს, რომელიც შექმნილია ინდივიდის პიროვნული
-                მახასიათებლების, ქცევითი ტენდენციებისა და ინტერპერსონალური
-                სტილის უკეთ გასააზრებლად. მისი მიზანია ფსიქოლოგიური
-                თვითშემეცნების ხელშეწყობა და პიროვნული ფუნქციონირების გარკვეული
-                ასპექტების იდენტიფიკაცია.
-              </p>
-              <br />
-              <p>
-                <strong
-                  >აღნიშნული ინსტრუმენტი არ წარმოადგენს დიაგნოსტიკურ
-                  საშუალებას</strong
-                >
-                და მისი შედეგები არ შეიძლება გამოყენებულ იქნას ფსიქიკური
-                აშლილობის დიაგნოზის დასასმელად. მიღებული მონაცემები ასახავს
-                მხოლოდ სუბიექტურ შეფასებას და საჭიროებს პროფესიონალური
-                ინტერპრეტაციის კონტექსტში განხილვას.
-              </p>
-              <br />
-              <p>
-                კლინიკური დიაგნოსტიკა უნდა განხორციელდეს მხოლოდ კვალიფიციური
-                ფსიქიკური ჯანმრთელობის სპეციალისტის მიერ, მრავალმხრივი შეფასების
-                საფუძველზე.
-              </p>
+            <div class="intro-box">
+                <h2>ინფორმირებული გაფრთხილება და გამოყენების მიზანი</h2>
+                <div class="intro-text">
+                    წინამდებარე კითხვარი წარმოადგენს თვითანგარიშის (self-report) ინსტრუმენტს, რომელიც შექმნილია ინდივიდის პიროვნული მახასიათებლების, ქცევითი ტენდენციებისა და ინტერპერსონალური სტილის უკეთ გასააზრებლად. მისი მიზანია ფსიქოლოგიური თვითშემეცნების ხელშეწყობა და პიროვნული ფუნქციონირების გარკვეული ასპექტების იდენტიფიკაცია.
+
+                    აღნიშნული ინსტრუმენტი არ წარმოადგენს დიაგნოსტიკურ საშუალებას და მისი შედეგები არ შეიძლება გამოყენებულ იქნას ფსიქიკური აშლილობის დიაგნოზის დასასმელად. მიღებული მონაცემები ასახავს მხოლოდ სუბიექტურ შეფასებას და საჭიროებს პროფესიონალური ინტერპრეტაციის კონტექსტში განხილვას.
+
+                    კლინიკური დიაგნოსტიკა უნდა განხორციელდეს მხოლოდ კვალიფიციური ფსიქიკური ჯანმრთელობის სპეციალისტის მიერ, მრავალმხრივი შეფასების საფუძველზე (მათ შორის კლინიკური ინტერვიუ, სტანდარტიზებული ტესტები და ფუნქციონირების შეფასება).
+
+                    კითხვარის შედეგები მიზანშეწონილია გამოყენებულ იქნას როგორც:
+                </div>
+                <ul class="intro-list">
+                    <li>თვითრეფლექსიისა და თვითშემეცნების საშუალება</li>
+                    <li>პიროვნული ტენდენციების წინასწარი იდენტიფიკაციის ინსტრუმენტი</li>
+                    <li>პროფესიონალურ კონსულტაციაში დამატებითი საინფორმაციო წყარო</li>
+                </ul>
+
+                <button class="btn btn-primary" onclick="startSurvey()">ვეთანხმები და დაწყება</button>
             </div>
-
-            <h3 style="margin-bottom: 10px; font-size: 1.1rem">
-              კითხვარის გამოყენების მიზანი:
-            </h3>
-            <ul class="intro-list">
-              <li>თვითრეფლექსიისა და თვითშემეცნების საშუალება</li>
-              <li>
-                პიროვნული ტენდენციების წინასწარი იდენტიფიკაციის ინსტრუმენტი
-              </li>
-              <li>პროფესიონალურ კონსულტაციაში დამატებითი საინფორმაციო წყარო</li>
-            </ul>
-
-            <button class="btn btn-primary" onclick="startSurvey()">
-              ვეთანხმები და დაწყება
-            </button>
-          </div>
         </div>
 
         <div id="surveyView" class="view">
-          <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
-          <div
-            id="progressText"
-            style="
-              text-align: right;
-              margin-bottom: 20px;
-              font-size: 0.85rem;
-              color: #777;
-            "
-          >
-            კითხვა 1 / 100
-          </div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <div id="progressText" style="text-align: right; margin-bottom: 20px; font-size: 0.85rem; color: #666; font-weight: bold;">კითხვა 1 / 100</div>
 
-          <div class="scale-guide">
-            <div class="guide-item">
-              <span class="guide-num">0</span>არასდროს
+            <div class="scale-guide">
+                <div class="guide-item"><span class="guide-num">0</span>საერთოდ არა</div>
+                <div class="guide-item"><span class="guide-num">1</span>იშვიათად</div>
+                <div class="guide-item"><span class="guide-num">2</span>ზოგჯერ</div>
+                <div class="guide-item"><span class="guide-num">3</span>ხშირად</div>
+                <div class="guide-item"><span class="guide-num">4</span>ყოველთვის</div>
             </div>
-            <div class="guide-item">
-              <span class="guide-num">1</span>იშვიათად
-            </div>
-            <div class="guide-item"><span class="guide-num">2</span>ზოგჯერ</div>
-            <div class="guide-item"><span class="guide-num">3</span>ხშირად</div>
-            <div class="guide-item">
-              <span class="guide-num">4</span>ყოველთვის
-            </div>
-          </div>
 
-          <div class="question-group">
-            <div id="questionText" class="question-text">იტვირთება...</div>
-            <div class="scale-options">
-              <button class="scale-btn" onclick="selectScore(0)">0</button>
-              <button class="scale-btn" onclick="selectScore(1)">1</button>
-              <button class="scale-btn" onclick="selectScore(2)">2</button>
-              <button class="scale-btn" onclick="selectScore(3)">3</button>
-              <button class="scale-btn" onclick="selectScore(4)">4</button>
+            <div class="question-group">
+                <div id="questionText" class="question-text">იტვირთება...</div>
+                <div class="scale-options">
+                    <button class="scale-btn" onclick="selectScore(0)">0</button>
+                    <button class="scale-btn" onclick="selectScore(1)">1</button>
+                    <button class="scale-btn" onclick="selectScore(2)">2</button>
+                    <button class="scale-btn" onclick="selectScore(3)">3</button>
+                    <button class="scale-btn" onclick="selectScore(4)">4</button>
+                </div>
             </div>
-          </div>
 
-          <div class="navigation">
-            <button class="btn btn-nav" id="prevBtn" onclick="prevQ()">
-              ← წინა
-            </button>
-            <button
-              class="btn btn-nav"
-              id="nextBtn"
-              style="background: var(--color-secondary); color: white"
-              onclick="nextQ()"
-            >
-              შემდეგი →
-            </button>
-          </div>
+            <div class="navigation">
+                <button class="btn btn-nav" id="prevBtn" onclick="prevQ()">← წინა</button>
+                <button class="btn btn-nav" id="nextBtn" style="background:var(--color-secondary); color:white;" onclick="nextQ()">შემდეგი →</button>
+            </div>
         </div>
 
         <div id="resultsView" class="view">
-          <h2
-            style="
-              text-align: center;
-              margin-bottom: 30px;
-              color: var(--color-primary);
-            "
-          >
-            შედეგების ანალიზი
-          </h2>
-          <div class="results-grid" id="resultsGrid"></div>
-          <button
-            class="btn btn-primary"
-            style="margin-top: 40px"
-            onclick="location.reload()"
-          >
-            თავიდან დაწყება
-          </button>
+            <h2 style="text-align: center; margin-bottom: 35px; color: var(--color-primary);">შედეგების ანალიზი</h2>
+            <div class="results-grid" id="resultsGrid"></div>
+            <button class="btn btn-primary" style="margin-top: 45px;" onclick="location.reload()">ტესტის თავიდან დაწყება</button>
         </div>
-      </div>
+
     </div>
+</div>
 
-    <script>
-      // მონაცემთა ბაზა
-      const surveyData = [
-        {
-          name: "პარანოიდული",
-          qs: [
-            "ხშირად ვეჭვობ, რომ სხვებს ჩემს მიმართ ცუდი ზრახვები აქვთ",
-            "მიჭირს ადამიანების ნდობა, თუნდაც ახლობლების",
-            "ნეიტრალურ ქცევაშიც კი ხშირად ვხედავ საფრთხეს",
-            "კრიტიკას აღვიქვამ როგორც პირად შეტევას",
-            "დიდხანს ვინახავ წყენას",
-            "მეშინია, რომ სხვები ჩემს წინააღმდეგ გამოიყენებენ ინფორმაციას",
-            "ხშირად ვეჭვიანობ პარტნიორზე საფუძვლის გარეშე",
-            "მგონია, რომ სხვები ჩემს ზურგს უკან საუბრობენ",
-            "ფრთხილად ვუზიარებ პირად ინფორმაციას",
-            "ხშირად ვამოწმებ სხვების ქცევას შესაძლო მოტყუების ნიშნებზე",
-          ],
-        },
-        {
-          name: "შიზოიდური",
-          qs: [
-            "მირჩევნია მარტო ყოფნა",
-            "იშვიათად მსურს ახლო ურთიერთობები",
-            "ემოციური გამოხატვა შეზღუდულია ჩემში",
-            "სექსუალური ინტერესი დაბალია",
-            "სიამოვნებას ვიღებ მხოლოდ მარტო ყოფნისას",
-            "კრიტიკა ან ქება ნაკლებად მოქმედებს ჩემზე",
-            "ვგრძნობ ემოციურ დისტანციას სხვებისგან",
-            "მეგობრების ძალიან მცირე წრე მაქვს",
-            "ხშირად ვირჩევ იზოლაციას",
-            "სხვები მეუბნებიან, რომ 'ცივი' ვარ",
-          ],
-        },
-        {
-          name: "შიზოტიპური",
-          qs: [
-            "მაქვს უცნაური ან მაგიური რწმენები",
-            "ვამჩნევ 'ნიშნებს', რომლებიც თითქოს ჩემთანაა დაკავშირებული",
-            "ჩემი აზროვნება სხვებისთვის უცნაურია",
-            "მეტყველება ზოგჯერ არალოგიკურია",
-            "სოციალური შფოთვა მაქვს ურთიერთობებში",
-            "მაქვს უცნაური აღქმები",
-            "ქცევა ან გარეგნობა ექსცენტრულია",
-            "ახლო მეგობრები თითქმის არ მყავს",
-            "სხვებს ვეჩვენები უცნაურად",
-            "ვგრძნობ, რომ სხვები მაკვირდებიან",
-          ],
-        },
-        {
-          name: "ანტისოციალური",
-          qs: [
-            "წესებს ხშირად ვარღვევ",
-            "ვმოქმედებ შედეგებზე ფიქრის გარეშე",
-            "ადვილად ვატყუებ სხვებს",
-            "ვმანიპულირებ ადამიანებით",
-            "აგრესიული ქცევა მქონია",
-            "პასუხისმგებლობას ხშირად ვერ ვიღებ",
-            "სინანული ნაკლებად მაქვს",
-            "რისკიანი ქცევები მიზიდავს",
-            "სხვების უფლებებს ნაკლებად ვითვალისწინებ",
-            "იმპულსურად ვიქცევი",
-          ],
-        },
-        {
-          name: "ბორდერლაინი",
-          qs: [
-            "ემოციები სწრაფად მეცვლება",
-            "მეშინია მიტოვების",
-            "ურთიერთობები ინტენსიური და არასტაბილურია",
-            "საკუთარი თავის აღქმა იცვლება",
-            "იმპულსური ქცევები მაქვს",
-            "თავს ხშირად ცარიელად ვგრძნობ",
-            "ძლიერი ბრაზი მიჩნდება",
-            "სტრესის დროს პარანოიდული აზრები მაქვს",
-            "თვითდაზიანების აზრები მქონია",
-            "უეცარი განწყობის ცვლილებები მაქვს",
-          ],
-        },
-        {
-          name: "ჰისტრიონული",
-          qs: [
-            "ყურადღების ცენტრში ყოფნა მსიამოვნებს",
-            "ემოციებს დრამატულად გამოვხატავ",
-            "ვცდილობ შთაბეჭდილების მოხდენას გარეგნობით",
-            "სწრაფად ვერთვები ემოციურად",
-            "ურთიერთობები ზედაპირულია",
-            "ადვილად ვექცევი გავლენის ქვეშ",
-            "მეტყველება ხშირად ზედაპირულია",
-            "ემოციები სწრაფად იცვლება",
-            "ყურადღების ნაკლებობა მაწუხებს",
-            "სხვების შეფასება ჩემზე მოქმედებს",
-          ],
-        },
-        {
-          name: "ნარცისული",
-          qs: [
-            "თავს განსაკუთრებულად ვთვლი",
-            "მჭირდება აღიარება",
-            "კრიტიკა მტკენს",
-            "სხვებზე უპირატესობას ვგრძნობ",
-            "ემპათია მიჭირს",
-            "ვფიქრობ, განსაკუთრებულ მოპყრობას ვიმსახურებ",
-            "წარმატებაზე ხშირად ვფიქრობ",
-            "ვიყენებ სხვებს მიზნისთვის",
-            "შური მაქვს სხვების მიმართ",
-            "სხვებს შურთ ჩემი",
-          ],
-        },
-        {
-          name: "ამრიდებლური",
-          qs: [
-            "თავს ვარიდებ სოციალურ სიტუაციებს",
-            "მეშინია კრიტიკის",
-            "თავს არასრულფასოვნად ვგრძნობ",
-            "ახალი ურთიერთობები მაშინებს",
-            "უარყოფის შიში მაქვს",
-            "მხოლოდ უსაფრთხო გარემოში ვიხსნები",
-            "ხშირად თავს ვიკავებ საუბრისგან",
-            "სოციალური შფოთვა მაწუხებს",
-            "თავს სხვებზე დაბლა ვაყენებ",
-            "მეშინია დამცირების",
-          ],
-        },
-        {
-          name: "დამოკიდებული",
-          qs: [
-            "მიჭირს დამოუკიდებელი გადაწყვეტილებები",
-            "ხშირად ვეყრდნობი სხვებს",
-            "მარტო ყოფნა მაშინებს",
-            "მეშინია მხარდაჭერის დაკარგვის",
-            "ვეთანხმები სხვებს კონფლიქტის ასარიდებლად",
-            "ვთმობ საკუთარ საჭიროებებს",
-            "ახალი პასუხისმგებლობა მაშინებს",
-            "მჭირდება მუდმივი მხარდაჭერა",
-            "ურთიერთობებში დამოკიდებული ვარ",
-            "მეშინია მიტოვების",
-          ],
-        },
-        {
-          name: "ობსესიური",
-          qs: [
-            "პერფექციონიზმი მაკავებს",
-            "დეტალებზე ზედმეტად ვფოკუსირდები",
-            "მიჭირს დელეგირება",
-            "წესები ჩემთვის ძალიან მნიშვნელოვანია",
-            "მოქნილობა მიჭირს",
-            "მუშაობას ვანიჭებ უპირატესობას",
-            "კონტროლის დაკარგვა მაშინებს",
-            "სტანდარტები მაღალი მაქვს",
-            "სხვებისგან სრულყოფილებას ველი",
-            "წესრიგი აუცილებელია",
-          ],
-        },
-      ];
+<script>
+    // სრული კითხვარი (კატეგორიები ჩანაცვლებულია ობიექტებში, რათა ეკრანზე არ გამოჩნდეს)
+    const surveyData = [
+        { name: "პარანოიდული", qs: ["ხშირად ვეჭვობ, რომ სხვებს ჩემს მიმართ ცუდი ზრახვები აქვთ", "მიჭირს ადამიანების ნდობა, თუნდაც ახლობლების", "ნეიტრალურ ქცევაშიც კი ხშირად ვხედავ საფრთხეს", "კრიტიკას აღვიქვამ როგორც პირად შეტევას", "დიდხანს ვინახავ წყენას", "მეშინია, რომ სხვები ჩემს წინააღმდეგ გამოიყენებენ ინფორმაციას", "ხშირად ვეჭვიანობ პარტნიორზე საფუძვლის გარეშე", "მგონია, რომ სხვები ჩემს ზურგს უკან საუბრობენ", "ფრთხილად ვუზიარებ პირად ინფორმაციას", "ხშირად ვამოწმებ სხვების ქცევას შესაძლო მოტყუების ნიშნებზე"] },
+        { name: "შიზოიდური", qs: ["მირჩევნია მარტო ყოფნა", "იშვიათად მსურს ახლო ურთიერთობები", "ემოციური გამოხატვა შეზღუდულია ჩემში", "სექსუალური ინტერესი დაბალია", "სიამოვნებას ვიღებ მხოლოდ მარტო ყოფნისას", "კრიტიკა ან ქება ნაკლებად მოქმედებს ჩემზე", "ვგრძნობ ემოციურ დისტანციას სხვებისგან", "მეგობრების ძალიან მცირე წრე მაქვს", "ხშირად ვირჩევ იზოლაციას", "სხვები მეუბნებიან, რომ 'ცივი' ვარ"] },
+        { name: "შიზოტიპური", qs: ["მაქვს უცნაური ან მაგიური რწმენები", "ვამჩნევ 'ნიშნებს', რომლებიც თითქოს ჩემთანაა დაკავშირებული", "ჩემი აზროვნება სხვებისთვის უცნაურია", "მეტყველება ზოგჯერ არალოგიკურია", "სოციალური შფოთვა მაქვს ურთიერთობებში", "მაქვს უცნაური აღქმები", "ქცევა ან გარეგნობა ექსცენტრულია", "ახლო მეგობრები თითქმის არ მყავს", "სხვებს ვეჩვენები უცნაურად", "ვგრძნობ, რომ სხვები მაკვირდებიან"] },
+        { name: "ანტისოციალური", qs: ["წესებს ხშირად ვარღვევ", "ვმოქმედებ შედეგებზე ფიქრის გარეშე", "ადვილად ვატყუებ სხვებს", "ვმანიპულირებ ადამიანებით", "აგრესიული ქცევა მქონია", "პასუხისმგებლობას ხშირად ვერ ვიღებ", "სინანული ნაკლებად მაქვს", "რისკიანი ქცევები მიზიდავს", "სხვების უფლებებს ნაკლებად ვითვალისწინებ", "იმპულსურად ვიქცევი"] },
+        { name: "ბორდერლაინი", qs: ["ემოციები სწრაფად მეცვლება", "მეშინია მიტოვების", "ურთიერთობები ინტენსიური და არასტაბილურია", "საკუთარი თავის აღქმა იცვლება", "იმპულსური ქცევები მაქვს", "თავს ხშირად ცარიელად ვგრძნობ", "ძლიერი ბრაზი მიჩნდება", "სტრესის დროს პარანოიდული აზრები მაქვს", "თვითდაზიანების აზრები მქონია", "უეცარი განწყობის ცვლილებები მაქვს"] },
+        { name: "ჰისტრიონული", qs: ["ყურადღების ცენტრში ყოფნა მსიამოვნებს", "ემოციებს დრამატულად გამოხატავ", "ვცდილობ შთაბეჭდილების მოხდენას გარეგნობით", "სწრაფად ვერთვები ემოციურად", "ურთიერთობები ზედაპირულია", "ადვილად ვექცევი გავლენის ქვეშ", "მეტყველება ხშირად ზედაპირულია", "ემოციები სწრაფად იცვლება", "ყურადღების ნაკლებობა მაწუხებს", "სხვების შეფასება ჩემზე მოქმედებს"] },
+        { name: "ნარცისული", qs: ["თავს განსაკუთრებულად ვთვლი", "მჭირდება აღიარება", "კრიტიკა მტკენს", "სხვებზე უპირატესობას ვგრძნობ", "ემპათია მიჭირს", "ვფიქრობ, განსაკუთრებულ მოპყრობას ვიმსახურებ", "წარმატებაზე ხშირად ვფიქრობ", "ვიყენებ სხვებს მიზნისთვის", "შური მაქვს სხვების მიმართ", "სხვებს შურთ ჩემი"] },
+        { name: "ამრიდებლური", qs: ["თავს ვარიდებ სოციალურ სიტუაციებს", "მეშინია კრიტიკის", "თავს არასრულფასოვნად ვგრძნობ", "ახალი ურთიერთობები მაშინებს", "უარყოფის შიში მაქვს", "მხოლოდ უსაფრთხო გარემოში ვიხსნები", "ხშირად თავს ვიკავებ საუბრისგან", "სოციალური შფოთვა მაწუხებს", "თავს სხვებზე დაბლა ვაყენებ", "მეშინია დამცირების"] },
+        { name: "დამოკიდებული", qs: ["მიჭირს დამოუკიდებელი გადაწყვეტილებები", "ხშირად ვეყრდნობი სხვებს", "მარტო ყოფნა მაშინებს", "მეშინია მხარდაჭერის დაკარგვის", "ვეთანხმები სხვებს კონფლიქტის ასარიდებლად", "ვთმობ საკუთარ საჭიროებებს", "ახალი პასუხისმგებლობა მაშინებს", "მჭირდება მუდმივი მხარდაჭერა", "ურთიერთობებში დამოკიდებული ვარ", "მეშინია მიტოვების"] },
+        { name: "ობსესიური", qs: ["პერფექციონიზმი მაკავებს", "დეტალებზე ზედმეტად ვფოკუსირდები", "მიჭირს დელეგირება", "წესები ჩემთვის ძალიან მნიშვნელოვანია", "მოქნილობა მიჭირს", "მუშაობას ვანიჭებ უპირატესობას", "კონტროლის დაკარგვა მაშინებს", "სტანდარტები მაღალი მაქვს", "სხვებისგან სრულყოფილებას ველი", "წესრიგი აუცილებელია"] }
+    ];
 
-      let questions = [];
-      surveyData.forEach((cat) =>
-        cat.qs.forEach((q) => questions.push({ text: q, cat: cat.name })),
-      );
+    let questions = [];
+    surveyData.forEach(cat => cat.qs.forEach(q => questions.push({ text: q, cat: cat.name })));
 
-      let currentIdx = 0;
-      let answers = new Array(questions.length).fill(null);
+    let currentIdx = 0;
+    let answers = new Array(questions.length).fill(null);
 
-      function startSurvey() {
-        document.getElementById("introView").classList.remove("active");
-        document.getElementById("surveyView").classList.add("active");
+    function startSurvey() {
+        document.getElementById('introView').classList.remove('active');
+        document.getElementById('surveyView').classList.add('active');
         renderQuestion();
-      }
+    }
 
-      function renderQuestion() {
+    function renderQuestion() {
         const q = questions[currentIdx];
-        document.getElementById("questionText").innerText = q.text;
-        document.getElementById("progressText").innerText =
-          `კითხვა ${currentIdx + 1} / ${questions.length}`;
-        document.getElementById("progressFill").style.width =
-          `${((currentIdx + 1) / questions.length) * 100}%`;
+        document.getElementById('questionText').innerText = q.text;
+        document.getElementById('progressText').innerText = `კითხვა ${currentIdx + 1} / ${questions.length}`;
+        document.getElementById('progressFill').style.width = `${((currentIdx + 1) / questions.length) * 100}%`;
 
-        document.querySelectorAll(".scale-btn").forEach((btn, i) => {
-          btn.classList.toggle("selected", answers[currentIdx] === i);
+        document.querySelectorAll('.scale-btn').forEach((btn, i) => {
+            btn.classList.toggle('selected', answers[currentIdx] === i);
         });
 
-        document.getElementById("prevBtn").style.visibility =
-          currentIdx === 0 ? "hidden" : "visible";
-        document.getElementById("nextBtn").innerText =
-          currentIdx === questions.length - 1 ? "დასრულება" : "შემდეგი →";
-      }
+        document.getElementById('prevBtn').style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
+        document.getElementById('nextBtn').innerText = currentIdx === questions.length - 1 ? 'დასრულება' : 'შემდეგი →';
+    }
 
-      window.selectScore = (val) => {
+    window.selectScore = (val) => {
         answers[currentIdx] = val;
         renderQuestion();
-        setTimeout(nextQ, 200);
-      };
+        setTimeout(nextQ, 150);
+    }
 
-      window.nextQ = () => {
+    window.nextQ = () => {
         if (answers[currentIdx] === null) return;
         if (currentIdx < questions.length - 1) {
-          currentIdx++;
-          renderQuestion();
+            currentIdx++;
+            renderQuestion();
         } else {
-          showResults();
+            showResults();
         }
-      };
+    }
 
-      window.prevQ = () => {
+    window.prevQ = () => {
         if (currentIdx > 0) {
-          currentIdx--;
-          renderQuestion();
+            currentIdx--;
+            renderQuestion();
         }
-      };
+    }
 
-      function showResults() {
-        document.getElementById("surveyView").classList.remove("active");
-        document.getElementById("resultsView").classList.add("active");
-
+    function showResults() {
+        document.getElementById('surveyView').classList.remove('active');
+        document.getElementById('resultsView').classList.add('active');
+        
         const scores = {};
-        surveyData.forEach(
-          (c) => (scores[c.name] = { val: 0, max: c.qs.length * 4 }),
-        );
+        surveyData.forEach(c => scores[c.name] = { val: 0, max: c.qs.length * 4 });
 
         answers.forEach((ans, i) => {
-          scores[questions[i].cat].val += ans;
+            scores[questions[i].cat].val += ans;
         });
 
-        const grid = document.getElementById("resultsGrid");
-        grid.innerHTML = Object.entries(scores)
-          .map(([name, data]) => {
+        const grid = document.getElementById('resultsGrid');
+        grid.innerHTML = Object.entries(scores).map(([name, data]) => {
             const perc = (data.val / data.max) * 100;
-            const color = perc > 35 ? "#e74c3c" : "#27ae60";
+            const color = perc > 40 ? '#e74c3c' : '#27ae60';
             return `
                 <div class="result-card">
-                    <div style="font-weight:600; margin-bottom:8px;">${name}</div>
+                    <div style="font-weight:700; font-size:0.95rem; margin-bottom:8px;">${name}</div>
                     <div style="font-size:1.2rem; font-weight:bold; color:var(--color-secondary);">${data.val} / ${data.max}</div>
                     <div style="background:#eee; height:6px; border-radius:3px; margin:10px 0;">
                         <div style="width:${perc}%; background:${color}; height:100%; border-radius:3px;"></div>
                     </div>
-                    <div style="font-size:0.75rem; color:#888;">${perc > 35 ? "ყურადსაღები მაჩვენებელი" : "ნორმის ფარგლებში"}</div>
                 </div>
             `;
-          })
-          .join("");
-      }
-    </script>
-  </body>
+        }).join('');
+    }
+</script>
+
+</body>
 </html>
