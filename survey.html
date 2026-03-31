@@ -5,182 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>პიროვნული მახასიათებლების კითხვარი</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --color-primary: #2c3e50;
             --color-secondary: #3498db;
-            --color-accent: #e74c3c;
             --color-bg: #f8f9fa;
             --color-text: #2c3e50;
             --color-border: #bdc3c7;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.2);
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: var(--color-text);
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 800px;
-        }
-
+        .container { width: 100%; max-width: 800px; }
         .main-content {
             background: white;
             border-radius: 28px;
-            padding: 45px;
-            box-shadow: var(--shadow-lg);
+            padding: 40px;
+            box-shadow: var(--shadow);
             width: 100%;
-            position: relative;
         }
 
         .view { display: none; }
-        .view.active { display: block; animation: fadeIn 0.6s ease; }
+        .view.active { display: block; animation: fadeIn 0.5s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(15px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
+        /* Intro Screen */
+        .intro-box h2 { color: var(--color-primary); margin-bottom: 20px; text-align: center; font-size: 1.4rem; }
+        .intro-text { font-size: 1rem; color: #333; margin-bottom: 20px; text-align: justify; white-space: pre-line; line-height: 1.6; }
+        .intro-list { margin-left: 20px; margin-bottom: 30px; color: #333; }
+        .intro-list li { margin-bottom: 8px; }
 
-        /* Intro Screen - Full Text Preservation */
-        .intro-box h2 { 
-            color: var(--color-primary); 
-            margin-bottom: 25px; 
-            text-align: center;
-            font-size: 1.5rem;
-            line-height: 1.4;
-        }
-        .intro-text { 
-            font-size: 1rem; 
-            color: #333; 
-            margin-bottom: 20px; 
-            text-align: justify; 
-            white-space: pre-line;
-            line-height: 1.7;
-        }
-        .intro-list { 
-            margin-left: 25px; 
-            margin-bottom: 35px; 
-            color: #333;
-        }
-        .intro-list li { margin-bottom: 10px; }
-
-        /* Fixed Scale Guide at Top */
+        /* Survey Elements */
+        .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--color-secondary); transition: width 0.4s; }
+        
         .scale-guide {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
+            gap: 10px;
             background: #f1f4f8;
-            padding: 18px;
-            border-radius: 18px;
-            margin-bottom: 30px;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 25px;
             border: 1px solid var(--color-border);
         }
+        .guide-item { text-align: center; font-size: 0.7rem; color: var(--color-primary); font-weight: 500; }
+        .guide-num { display: block; font-weight: bold; font-size: 1rem; color: var(--color-secondary); }
 
-        .guide-item { text-align: center; font-size: 0.75rem; color: var(--color-primary); font-weight: 500; }
-        .guide-num { display: block; font-weight: 800; font-size: 1.1rem; color: var(--color-secondary); margin-bottom: 4px; }
-
-        /* Question Interaction */
-        .question-group { text-align: center; margin-bottom: 35px; }
         .question-text { 
-            font-size: 1.35rem; 
+            font-size: 1.25rem; 
             color: var(--color-primary); 
-            margin-bottom: 35px; 
-            min-height: 110px; 
+            margin-bottom: 30px; 
+            min-height: 140px; 
             display: flex; 
+            flex-direction: column;
             align-items: center; 
             justify-content: center; 
-            font-weight: 500;
-            padding: 0 15px;
+            text-align: center;
         }
-        
+        .sub-text { font-size: 1rem; color: #666; font-style: italic; margin-top: 10px; }
+
         .scale-options { display: flex; gap: 15px; justify-content: center; }
         .scale-btn {
-            width: 60px; height: 60px; border: 2px solid var(--color-border);
+            width: 55px; height: 55px; border: 2px solid var(--color-border);
             background: white; border-radius: 50%; cursor: pointer;
-            font-size: 1.25rem; font-weight: bold; transition: var(--transition);
+            font-size: 1.2rem; font-weight: bold; transition: 0.2s;
         }
-        .scale-btn:hover { border-color: var(--color-secondary); transform: scale(1.15); color: var(--color-secondary); }
-        .scale-btn.selected { background: var(--color-secondary); color: white; border-color: var(--color-secondary); box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4); }
+        .scale-btn.selected { background: var(--color-secondary); color: white; border-color: var(--color-secondary); }
 
-        /* Progress & Navigation */
-        .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--color-secondary); transition: width 0.4s ease; }
-        .navigation { display: flex; justify-content: space-between; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee; }
+        .navigation { display: flex; justify-content: space-between; margin-top: 40px; }
+        .btn { padding: 12px 30px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; }
+        .btn-primary { background: var(--color-secondary); color: white; width: 100%; font-size: 1.1rem; }
+        .btn-nav { background: #f1f4f8; color: var(--color-primary); min-width: 120px; }
 
-        .btn { padding: 14px 35px; border-radius: 12px; border: none; cursor: pointer; font-weight: 600; font-size: 1.05rem; transition: var(--transition); }
-        .btn-primary { background: var(--color-secondary); color: white; width: 100%; }
-        .btn-primary:hover { background: #2980b9; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        .btn-nav { background: #f1f4f8; color: var(--color-primary); min-width: 130px; }
-        .btn-nav:hover { background: #e2e8f0; }
-
-        /* Results Display */
-        .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .result-card { padding: 22px; border-radius: 18px; border-left: 6px solid var(--color-secondary); background: #fdfdfd; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-
-        @media (max-width: 600px) {
-            .main-content { padding: 30px 20px; }
-            .scale-btn { width: 48px; height: 48px; font-size: 1.1rem; }
-            .scale-guide { grid-template-columns: 1fr; gap: 8px; }
-            .guide-item { display: flex; align-items: center; gap: 15px; text-align: left; padding: 2px 10px; }
-            .question-text { font-size: 1.15rem; }
-        }
+        .results-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 15px; }
+        .result-card { padding: 20px; border-radius: 15px; border-left: 5px solid var(--color-secondary); background: #fdfdfd; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="main-content">
-        
         <div id="introView" class="view active">
-            <div class="intro-box">
-                <h2>ინფორმირებული გაფრთხილება და გამოყენების მიზანი</h2>
-                <div class="intro-text">
-                    წინამდებარე კითხვარი წარმოადგენს თვითანგარიშის (self-report) ინსტრუმენტს, რომელიც შექმნილია ინდივიდის პიროვნული მახასიათებლების, ქცევითი ტენდენციებისა და ინტერპერსონალური სტილის უკეთ გასააზრებლად. მისი მიზანია ფსიქოლოგიური თვითშემეცნების ხელშეწყობა და პიროვნული ფუნქციონირების გარკვეული ასპექტების იდენტიფიკაცია.
+            <h2>ინფორმირებული გაფრთხილება და გამოყენების მიზანი</h2>
+            <div class="intro-text">
+                წინამდებარე კითხვარი წარმოადგენს თვითანგარიშის (self-report) ინსტრუმენტს, რომელიც შექმნილია ინდივიდის პიროვნული მახასიათებლების, ქცევითი ტენდენციებისა და ინტერპერსონალური სტილის უკეთ გასააზრებლად. მისი მიზანია ფსიქოლოგიური თვითშემეცნების ხელშეწყობა და პიროვნული ფუნქციონირების გარკვეული ასპექტების იდენტიფიკაცია.
 
-                    აღნიშნული ინსტრუმენტი არ წარმოადგენს დიაგნოსტიკურ საშუალებას და მისი შედეგები არ შეიძლება გამოყენებულ იქნას ფსიქიკური აშლილობის დიაგნოზის დასასმელად. მიღებული მონაცემები ასახავს მხოლოდ სუბიექტურ შეფასებას და საჭიროებს პროფესიონალური ინტერპრეტაციის კონტექსტში განხილვას.
+                აღნიშნული ინსტრუმენტი არ წარმოადგენს დიაგნოსტიკურ საშუალებას და მისი შედეგები არ შეიძლება გამოყენებულ იქნას ფსიქიკური აშლილობის დიაგნოზის დასასმელად. მიღებული მონაცემები ასახავს მხოლოდ სუბიექტურ შეფასებას და საჭიროებს პროფესიონალური ინტერპრეტაციის კონტექსტში განხილვას.
 
-                    კლინიკური დიაგნოსტიკა უნდა განხორციელდეს მხოლოდ კვალიფიციური ფსიქიკური ჯანმრთელობის სპეციალისტის მიერ, მრავალმხრივი შეფასების საფუძველზე (მათ შორის კლინიკური ინტერვიუ, სტანდარტიზებული ტესტები და ფუნქციონირების შეფასება).
+                კლინიკური დიაგნოსტიკა უნდა განხორციელდეს მხოლოდ კვალიფიციური ფსიქიკური ჯანმრთელობის სპეციალისტის მიერ, მრავალმხრივი შეფასების საფუძველზე (მათ შორის კლინიკური ინტერვიუ, სტანდარტიზებული ტესტები და ფუნქციონირების შეფასება).
 
-                    კითხვარის შედეგები მიზანშეწონილია გამოყენებულ იქნას როგორც:
-                </div>
-                <ul class="intro-list">
-                    <li>თვითრეფლექსიისა და თვითშემეცნების საშუალება</li>
-                    <li>პიროვნული ტენდენციების წინასწარი იდენტიფიკაციის ინსტრუმენტი</li>
-                    <li>პროფესიონალურ კონსულტაციაში დამატებითი საინფორმაციო წყარო</li>
-                </ul>
-
-                <button class="btn btn-primary" onclick="startSurvey()">ვეთანხმები და დაწყება</button>
+                კითხვარის შედეგები მიზანშეწონილია გამოყენებულ იქნას როგორც:
             </div>
+            <ul class="intro-list">
+                <li>თვითრეფლექსიისა და თვითშემეცნების საშუალება</li>
+                <li>პიროვნული ტენდენციების წინასწარი იდენტიფიკაციის ინსტრუმენტი</li>
+                <li>პროფესიონალურ კონსულტაციაში დამატებითი საინფორმაციო წყარო</li>
+            </ul>
+            <button class="btn btn-primary" onclick="startSurvey()">ვეთანხმები და დაწყება</button>
         </div>
 
         <div id="surveyView" class="view">
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            <div id="progressText" style="text-align: right; margin-bottom: 20px; font-size: 0.85rem; color: #666; font-weight: bold;">კითხვა 1 / 100</div>
+            <div id="progressText" style="text-align: right; margin-bottom: 15px; font-size: 0.8rem;">კითხვა 1 / 100</div>
 
             <div class="scale-guide">
-                <div class="guide-item"><span class="guide-num">0</span>საერთოდ არა</div>
+                <div class="guide-item"><span class="guide-num">0</span>საერთოდ არ მახასიათებს</div>
                 <div class="guide-item"><span class="guide-num">1</span>იშვიათად</div>
                 <div class="guide-item"><span class="guide-num">2</span>ზოგჯერ</div>
                 <div class="guide-item"><span class="guide-num">3</span>ხშირად</div>
-                <div class="guide-item"><span class="guide-num">4</span>ყოველთვის</div>
+                <div class="guide-item"><span class="guide-num">4</span>თითქმის ყოველთვის</div>
             </div>
 
             <div class="question-group">
-                <div id="questionText" class="question-text">იტვირთება...</div>
+                <div id="questionContainer" class="question-text">
+                    <span id="mainQ"></span>
+                    <span id="subQ" class="sub-text"></span>
+                </div>
                 <div class="scale-options">
                     <button class="scale-btn" onclick="selectScore(0)">0</button>
                     <button class="scale-btn" onclick="selectScore(1)">1</button>
@@ -197,31 +147,139 @@
         </div>
 
         <div id="resultsView" class="view">
-            <h2 style="text-align: center; margin-bottom: 35px; color: var(--color-primary);">შედეგების ანალიზი</h2>
+            <h2 style="text-align: center; margin-bottom: 30px;">ანალიზის შედეგები</h2>
             <div class="results-grid" id="resultsGrid"></div>
-            <button class="btn btn-primary" style="margin-top: 45px;" onclick="location.reload()">ტესტის თავიდან დაწყება</button>
+            <button class="btn btn-primary" style="margin-top: 40px;" onclick="location.reload()">თავიდან დაწყება</button>
         </div>
-
     </div>
 </div>
 
 <script>
-    // სრული კითხვარი (კატეგორიები ჩანაცვლებულია ობიექტებში, რათა ეკრანზე არ გამოჩნდეს)
     const surveyData = [
-        { name: "პარანოიდული", qs: ["ხშირად ვეჭვობ, რომ სხვებს ჩემს მიმართ ცუდი ზრახვები აქვთ", "მიჭირს ადამიანების ნდობა, თუნდაც ახლობლების", "ნეიტრალურ ქცევაშიც კი ხშირად ვხედავ საფრთხეს", "კრიტიკას აღვიქვამ როგორც პირად შეტევას", "დიდხანს ვინახავ წყენას", "მეშინია, რომ სხვები ჩემს წინააღმდეგ გამოიყენებენ ინფორმაციას", "ხშირად ვეჭვიანობ პარტნიორზე საფუძვლის გარეშე", "მგონია, რომ სხვები ჩემს ზურგს უკან საუბრობენ", "ფრთხილად ვუზიარებ პირად ინფორმაციას", "ხშირად ვამოწმებ სხვების ქცევას შესაძლო მოტყუების ნიშნებზე"] },
-        { name: "შიზოიდური", qs: ["მირჩევნია მარტო ყოფნა", "იშვიათად მსურს ახლო ურთიერთობები", "ემოციური გამოხატვა შეზღუდულია ჩემში", "სექსუალური ინტერესი დაბალია", "სიამოვნებას ვიღებ მხოლოდ მარტო ყოფნისას", "კრიტიკა ან ქება ნაკლებად მოქმედებს ჩემზე", "ვგრძნობ ემოციურ დისტანციას სხვებისგან", "მეგობრების ძალიან მცირე წრე მაქვს", "ხშირად ვირჩევ იზოლაციას", "სხვები მეუბნებიან, რომ 'ცივი' ვარ"] },
-        { name: "შიზოტიპური", qs: ["მაქვს უცნაური ან მაგიური რწმენები", "ვამჩნევ 'ნიშნებს', რომლებიც თითქოს ჩემთანაა დაკავშირებული", "ჩემი აზროვნება სხვებისთვის უცნაურია", "მეტყველება ზოგჯერ არალოგიკურია", "სოციალური შფოთვა მაქვს ურთიერთობებში", "მაქვს უცნაური აღქმები", "ქცევა ან გარეგნობა ექსცენტრულია", "ახლო მეგობრები თითქმის არ მყავს", "სხვებს ვეჩვენები უცნაურად", "ვგრძნობ, რომ სხვები მაკვირდებიან"] },
-        { name: "ანტისოციალური", qs: ["წესებს ხშირად ვარღვევ", "ვმოქმედებ შედეგებზე ფიქრის გარეშე", "ადვილად ვატყუებ სხვებს", "ვმანიპულირებ ადამიანებით", "აგრესიული ქცევა მქონია", "პასუხისმგებლობას ხშირად ვერ ვიღებ", "სინანული ნაკლებად მაქვს", "რისკიანი ქცევები მიზიდავს", "სხვების უფლებებს ნაკლებად ვითვალისწინებ", "იმპულსურად ვიქცევი"] },
-        { name: "ბორდერლაინი", qs: ["ემოციები სწრაფად მეცვლება", "მეშინია მიტოვების", "ურთიერთობები ინტენსიური და არასტაბილურია", "საკუთარი თავის აღქმა იცვლება", "იმპულსური ქცევები მაქვს", "თავს ხშირად ცარიელად ვგრძნობ", "ძლიერი ბრაზი მიჩნდება", "სტრესის დროს პარანოიდული აზრები მაქვს", "თვითდაზიანების აზრები მქონია", "უეცარი განწყობის ცვლილებები მაქვს"] },
-        { name: "ჰისტრიონული", qs: ["ყურადღების ცენტრში ყოფნა მსიამოვნებს", "ემოციებს დრამატულად გამოხატავ", "ვცდილობ შთაბეჭდილების მოხდენას გარეგნობით", "სწრაფად ვერთვები ემოციურად", "ურთიერთობები ზედაპირულია", "ადვილად ვექცევი გავლენის ქვეშ", "მეტყველება ხშირად ზედაპირულია", "ემოციები სწრაფად იცვლება", "ყურადღების ნაკლებობა მაწუხებს", "სხვების შეფასება ჩემზე მოქმედებს"] },
-        { name: "ნარცისული", qs: ["თავს განსაკუთრებულად ვთვლი", "მჭირდება აღიარება", "კრიტიკა მტკენს", "სხვებზე უპირატესობას ვგრძნობ", "ემპათია მიჭირს", "ვფიქრობ, განსაკუთრებულ მოპყრობას ვიმსახურებ", "წარმატებაზე ხშირად ვფიქრობ", "ვიყენებ სხვებს მიზნისთვის", "შური მაქვს სხვების მიმართ", "სხვებს შურთ ჩემი"] },
-        { name: "ამრიდებლური", qs: ["თავს ვარიდებ სოციალურ სიტუაციებს", "მეშინია კრიტიკის", "თავს არასრულფასოვნად ვგრძნობ", "ახალი ურთიერთობები მაშინებს", "უარყოფის შიში მაქვს", "მხოლოდ უსაფრთხო გარემოში ვიხსნები", "ხშირად თავს ვიკავებ საუბრისგან", "სოციალური შფოთვა მაწუხებს", "თავს სხვებზე დაბლა ვაყენებ", "მეშინია დამცირების"] },
-        { name: "დამოკიდებული", qs: ["მიჭირს დამოუკიდებელი გადაწყვეტილებები", "ხშირად ვეყრდნობი სხვებს", "მარტო ყოფნა მაშინებს", "მეშინია მხარდაჭერის დაკარგვის", "ვეთანხმები სხვებს კონფლიქტის ასარიდებლად", "ვთმობ საკუთარ საჭიროებებს", "ახალი პასუხისმგებლობა მაშინებს", "მჭირდება მუდმივი მხარდაჭერა", "ურთიერთობებში დამოკიდებული ვარ", "მეშინია მიტოვების"] },
-        { name: "ობსესიური", qs: ["პერფექციონიზმი მაკავებს", "დეტალებზე ზედმეტად ვფოკუსირდები", "მიჭირს დელეგირება", "წესები ჩემთვის ძალიან მნიშვნელოვანია", "მოქნილობა მიჭირს", "მუშაობას ვანიჭებ უპირატესობას", "კონტროლის დაკარგვა მაშინებს", "სტანდარტები მაღალი მაქვს", "სხვებისგან სრულყოფილებას ველი", "წესრიგი აუცილებელია"] }
+        { name: "პარანოიდული", qs: [
+            ["ხშირად ვეჭვობ, რომ სხვებს ჩემს მიმართ ცუდი ზრახვები აქვთ", "(მაგ. მგონია, რომ შეიძლება მატყუებენ ან ზიანის მოყენება უნდათ)"],
+            ["მიჭირს ადამიანების ნდობა, თუნდაც ახლობლების", "(მიჭირს ბოლომდე ვენდო, თუნდაც ახლო ადამიანებს)"],
+            ["ნეიტრალურ ქცევაშიც კი ხშირად ვხედავ საფრთხეს", "(ჩვეულებრივ სიტყვებს ან ქცევასაც შეიძლება ცუდად ვიგებ)"],
+            ["კრიტიკას აღვიქვამ როგორც პირად შეტევას", "(თუ შენიშვნას მაძლევენ, ვგრძნობ, რომ მაკნინებენ)"],
+            ["დიდხანს ვინახავ წყენას", "(მიჭირს წყენის დავიწყება)"],
+            ["მეშინია, რომ სხვები ჩემს წინააღმდეგ გამოიყენებენ ინფორმაციას", "(ვფიქრობ, რომ რაც ვუთხარი, შეიძლება ჩემს წინააღმდეგ გამოიყენონ)"],
+            ["ხშირად ვეჭვიანობ პარტნიორზე საფუძვლის გარეშე", "(ეჭვი მიჩნდება მაშინაც, როცა ფაქტები არ მაქვს)"],
+            ["მგონია, რომ სხვები ჩემს ზურგს უკან საუბრობენ", "(ხშირად ვფიქრობ, რომ ჩემზე საუბრობენ)"],
+            ["ფრთხილად ვუზიარებ პირად ინფორმაციას", "(არ მიყვარს საკუთარი თავის შესახებ ბევრი რამის თქმა)"],
+            ["ხშირად ვამოწმებ სხვების ქცევას შესაძლო მოტყუების ნიშნებზე", "(ვაკვირდები, ხომ არ მატყუებენ)"]
+        ]},
+        { name: "შიზოიდური", qs: [
+            ["მირჩევნია მარტო ყოფნა", "(მარტო ყოფნა უფრო კომფორტულია ჩემთვის)"],
+            ["იშვიათად მსურს ახლო ურთიერთობები", "(არ მაქვს დიდი სურვილი ვინმესთან ძალიან ახლო ვიყო)"],
+            ["ემოციური გამოხატვა შეზღუდულია ჩემში", "(არ მიყვარს ან მიჭირს ემოციების გამოხატვა)"],
+            ["სექსუალური/ინტიმური ინტერესიც დაბალია", "(ინტიმური სიახლოვის სურვილი ნაკლებად მაქვს)"],
+            ["სიამოვნებას ვიღებ მხოლოდ ინდივიდუალური აქტივობებისგან", "(მარტო გაკეთებული საქმეები უფრო მსიამოვნებს)"],
+            ["კრიტიკა ან ქება ნაკლებად მოქმედებს ჩემზე", "(სხვების აზრი დიდად არ მოქმედებს ჩემზე)"],
+            ["ვგრძნობ ემოციურ დისტანციას სხვებისგან", "(თითქოს ბოლომდე ვერ ვუახლოვდები ადამიანებს)"],
+            ["მეგობრების ძალიან მცირე წრე მაქვს", "(ძალიან ცოტა ახლო ადამიანი მყავს ან საერთოდ არავინ)"],
+            ["ხშირად ვირჩევ იზოლაციას", "(ხშირად ვრჩები მარტო, სხვებთან ყოფნის ნაცვლად)"],
+            ["სხვები ხშირად მეუბნებიან, რომ „ცივი“ ვარ", "(ამბობენ, რომ ემოციურად შეკავებული ვარ)"]
+        ]},
+        { name: "შიზოტიპური", qs: [
+            ["მაქვს უცნაური ან მაგიური რწმენები", "(მაგ. მგონია, რომ ინტუიცია განსაკუთრებული ძალაა)"],
+            ["ხშირად ვამჩნევ „ნიშნებს“, რომლებიც თითქოს ჩემთანაა დაკავშირებული", "(ჩვეულებრივ მოვლენებს პირად მნიშვნელობას ვაძლევ)"],
+            ["ჩემი აზროვნება სხვებისთვის უცნაურია", "(სხვებს უჭირთ ჩემი აზრების გაგება)"],
+            ["მეტყველება ზოგჯერ არალოგიკურია", "(ზოგჯერ ისე ვლაპარაკობ, რომ სხვებს უჭირთ მიხვედრა)"],
+            ["სოციალური შფოთვა მაქვს ახლო ურთიერთობებშიც", "(ნაცნობ ადამიანებთანაც კი შეიძლება დაძაბული ვიყო)"],
+            ["მაქვს უცნაური აღქმები (მაგ. სხეულის შეგრძნებები)", "(ზოგჯერ უცნაურად ვგრძნობ სხეულს ან გარემოს)"],
+            ["ქცევა ან გარეგნობა ექსცენტრულია", "(შეიძლება სხვებისთვის უცნაურად გამოვიყურებოდე ან ვიქცეოდე)"],
+            ["ახლო მეგობრები თითქმის არ მყავს", "(მიჭირს ახლო მეგობრების ყოლა)"],
+            ["სხვებს ვეჩვენები უცნაურად", "(ხშირად მეუბნებიან, რომ განსხვავებული ვარ)"],
+            ["ვგრძნობ, რომ სხვები მაკვირდებიან", "(მგონია, რომ სხვები მამჩნევენ ან მაკვირდებიან)"]
+        ]},
+        { name: "ანტისოციალური", qs: [
+            ["წესებს ხშირად ვარღვევ", "(არ მიყვარს წესების დაცვა)"],
+            ["ვმოქმედებ შედეგებზე ფიქრის გარეშე", "(ჯერ ვაკეთებ და მერე ვფიქრობ შედეგებზე)"],
+            ["ადვილად ვატყუებ სხვებს", "(შეიძლება ტყუილი ვთქვა ჩემი მიზნისთვის)"],
+            ["ვმანიპულირებ ადამიანებით მიზნის მისაღწევად", "(ხანდახან სხვებს ვიყენებ, რომ მიზანს მივაღწიო)"],
+            ["აგრესიული ქცევა მქონია", "(მქონია შემთხვევები, როცა ძალიან გავბრაზებულვარ ან აგრესიულად მოვქცეულვარ)"],
+            ["პასუხისმგებლობას ხშირად ვერ ვიღებ", "(მიჭირს ვაღიარო, რომ რამე ჩემი ბრალია)"],
+            ["სინანული ნაკლებად მაქვს", "(ხანდახან არ ვნანობ იმას, რაც სხვებს ვაწყენინე)"],
+            ["რისკიანი ქცევები მიზიდავს", "(მიყვარს რისკი და ადრენალინი)"],
+            ["სხვების უფლებებს ნაკლებად ვითვალისწინებ", "(ხანდახან არ ვფიქრობ, რა გავლენა ექნება სხვებზე ჩემს ქცევას)"],
+            ["იმპულსურად ვიქცევი", "(ვაკეთებ რამეს დაუფიქრებლად)"]
+        ]},
+        { name: "ბორდერლაინი", qs: [
+            ["ემოციები სწრაფად მეცვლება", "(განწყობა შეიძლება სწრაფად შემეცვალოს)"],
+            ["მეშინია მიტოვების", "(ძალიან მაშინებს, რომ ვინმე დამტოვებს)"],
+            ["ურთიერთობები ინტენსიური და არასტაბილურია", "(ხშირად ძალიან ძლიერი, მაგრამ არამყარი ურთიერთობები მაქვს)"],
+            ["საკუთარი თავის აღქმა იცვლება", "(ზოგჯერ არ ვიცი, ზუსტად ვინ ვარ ან როგორ ვხედავ თავს)"],
+            ["იმპულსური ქცევები მაქვს", "(სტრესში შეიძლება დაუფიქრებლად მოვიქცე)"],
+            ["თავს ხშირად ცარიელად ვგრძნობ", "(მაქვს სიცარიელის შეგრძნება შიგნით)"],
+            ["ძლიერი ბრაზი მიჩნდება", "(ძალიან ძლიერად ვბრაზდები ხოლმე)"],
+            ["სტრესის დროს პარანოიდული აზრები მაქვს", "(სტრესში შეიძლება ვიფიქრო, რომ სხვები ჩემ წინააღმდეგ არიან)"],
+            ["თვითდაზიანების აზრები მქონია", "(მიფიქრია საკუთარი თავისთვის ზიანის მიყენებაზე)"],
+            ["უეცარი განწყობის ცვლილებები მაქვს", "(განწყობა სწრაფად და მკვეთრად მიცვლება)"]
+        ]},
+        { name: "ჰისტრიონული", qs: [
+            ["ყურადღების ცენტრში ყოფნა მსიამოვნებს", "(მიყვარს, როცა სხვები მე მაკვირდებიან)"],
+            ["ემოციებს დრამატულად გამოვხატავ", "(ხშირად ძალიან ძლიერად ვაჩვენებ ემოციებს)"],
+            ["ვცდილობ შთაბეჭდილების მოხდენას გარეგნობით", "(გარეგნობით ვცდილობ ყურადღების მიქცევას)"],
+            ["სწრაფად ვერთვები ემოციურად", "(მოკლე დროში ვუახლოვდები ადამიანებს)"],
+            ["ურთიერთობები ზედაპირულია", "(ურთიერთობები შეიძლება არ იყოს ძალიან ღრმა)"],
+            ["ადვილად ვექცევი გავლენის ქვეშ", "(სხვების აზრი მარტივად მოქმედებს ჩემზე)"],
+            ["მეტყველება ხშირად ზედაპირულია", "(ვზოგავ დეტალებს ან ზედაპირულად ვლაპარაკობ)"],
+            ["ემოციები სწრაფად იცვლება", "(განწყობა ხშირად მიცვლება)"],
+            ["ყურადღების ნაკლებობა მაწუხებს", "(არ მომწონს, როცა ყურადღებას არ მაქცევენ)"],
+            ["სხვების შეფასება ჩემზე ძლიერ მოქმედებს", "(სხვების აზრი ჩემთვის ძალიან მნიშვნელოვანია)"]
+        ]},
+        { name: "ნარცისული", qs: [
+            ["თავს განსაკუთრებულად ვთვლი", "(ვფიქრობ, რომ სხვებზე გამორჩეული ვარ)"],
+            ["მჭირდება აღიარება", "(მნიშვნელოვანია, რომ სხვებმა დამაფასონ)"],
+            ["კრიტიკა მტკენს", "(ძალიან მტკივნეულად ვიღებ შენიშვნას)"],
+            ["სხვებზე უპირატესობას ვგრძნობ", "(ვფიქრობ, რომ სხვებზე უკეთესი ვარ)"],
+            ["ემპათია მიჭირს", "(ზოგჯერ მიჭირს სხვისი გრძნობების გაგება)"],
+            ["ვფიქრობ, რომ განსაკუთრებულ მოპყრობას ვიმსახურებ", "(მგონია, რომ სხვებზე მეტი უნდა მივიღო)"],
+            ["წარმატებაზე ხშირად ვფიქრობ", "(ხშირად ვფიქრობ ჩემს წარმატებასა და მიღწევებზე)"],
+            ["ვიყენებ სხვებს მიზნისთვის", "(ხანდახან სხვებს ვიყენებ ჩემი მიზნების მისაღწევად)"],
+            ["შური მაქვს სხვების მიმართ", "(ვბრაზდები ან მაწუხებს, როცა სხვას უკეთ გამოსდის)"],
+            ["სხვებს ხშირად შურთ ჩემი", "(მგონია, რომ სხვებს შურთ ჩემი)"]
+        ]},
+        { name: "ამრიდებლური", qs: [
+            ["თავს ვარიდებ სოციალურ სიტუაციებს", "(ვცდილობ ავირიდო შეხვედრები ან ხალხთან ყოფნა)"],
+            ["მეშინია კრიტიკის", "(მაშინებს, რომ ვინმე უარყოფითად შემაფასებს)"],
+            ["თავს არასრულფასოვნად ვგრძნობ", "(ვფიქრობ, რომ სხვებზე ნაკლები ვარ)"],
+            ["ახალი ურთიერთობები მაშინებს", "(მიჭირს ახალი ადამიანების გაცნობა)"],
+            ["უარყოფის შიში მაქვს", "(მეშინია, რომ არ მიმიღებენ)"],
+            ["მხოლოდ უსაფრთხო გარემოში ვიხსნები", "(მხოლოდ ნაცნობ ადამიანებთან ვარ თავისუფალი)"],
+            ["ხშირად თავს ვიკავებ საუბრისგან", "(ვერიდები საუბარს, რომ არ შევრცხვე)"],
+            ["სოციალური შფოთვა მაწუხებს", "(ხალხში ყოფნისას ვნერვიულობ)"],
+            ["სხვებთან შედარებით თავს დაბლა ვაყენებ", "(სხვებს ჩემზე უკეთესად ვთვლი)"],
+            ["მეშინია დამცირების", "(მეშინია, რომ შემრცხვება ან დამამცირებენ)"]
+        ]},
+        { name: "დამოკიდებული", qs: [
+            ["მიჭირს დამოუკიდებელი გადაწყვეტილებების მიღება", "(მჭირდება, რომ ვინმემ მირჩიოს)"],
+            ["ხშირად ვეყრდნობი სხვებს", "(სხვების დახმარების გარეშე მიჭირს)"],
+            ["მარტო ყოფნა მაშინებს", "(მარტო ყოფნა დისკომფორტს მიქმნის)"],
+            ["მეშინია მხარდაჭერის დაკარგვის", "(მაშინებს, რომ შეიძლება დამტოვონ)"],
+            ["ვეთანხმები სხვებს კონფლიქტის ასარიდებლად", "(ვთანხმდები, რომ არ ვიკამათო)"],
+            ["ვთმობ საკუთარ საჭიროებებს", "(ჩემს სურვილებზე უარს ვამბობ სხვების გამო)"],
+            ["ახალი პასუხისმგებლობა მაშინებს", "(მიჭირს მარტო რაიმეს დაწყება)"],
+            ["მჭირდება მუდმივი მხარდაჭერა", "(მჭირდება, რომ ვინმე გვერდით იყოს)"],
+            ["ურთიერთობებში დამოკიდებული ვარ", "(სხვა ადამიანზე ვარ მიჯაჭვული)"],
+            ["მეშინია მიტოვების", "(მაშინებს, რომ დავრჩები მარტო)"]
+        ]},
+        { name: "ობსესიურ-კომპულსიური", qs: [
+            ["პერფექციონიზმი მაკავებს", "(ვცდილობ ყველაფერი იდეალურად გავაკეთო და ეს მაყოვნებს)"],
+            ["დეტალებზე ზედმეტად ვფოკუსირდები", "(ძალიან დიდ ყურადღებას ვაქცევ წვრილმანებს)"],
+            ["მიჭირს დელეგირება", "(მიჭირს სხვას მივანდო საქმე)"],
+            ["წესები ჩემთვის ძალიან მნიშვნელოვანია", "(მიყვარს, როცა ყველაფერი წესრიგშია)"],
+            ["მოქნილობა მიჭირს", "(მიჭირს გეგმების შეცვლა)"],
+            ["მუშაობას ვანიჭებ უპირატესობას დასვენებაზე", "(ხშირად ვმუშაობ დასვენების ნაცვლად)"],
+            ["კონტროლის დაკარგვა მაშინებს", "(არ მიყვარს, როცა რაღაც ჩემს კონტროლს სცდება)"],
+            ["სტანდარტები ძალიან მაღალი მაქვს", "(ძალიან ბევრს ვითხოვ საკუთარი თავისგან)"],
+            ["სხვებისგანაც სრულყოფილებას ველი", "(მინდა, სხვებმაც იდეალურად გააკეთონ საქმე)"],
+            ["წესრიგი ჩემთვის აუცილებელია", "(მჭირდება სისუფთავე და ორგანიზებულობა)"]
+        ]}
     ];
 
     let questions = [];
-    surveyData.forEach(cat => cat.qs.forEach(q => questions.push({ text: q, cat: cat.name })));
+    surveyData.forEach(c => c.qs.forEach(q => questions.push({ text: q[0], sub: q[1], cat: c.name })));
 
     let currentIdx = 0;
     let answers = new Array(questions.length).fill(null);
@@ -234,7 +292,8 @@
 
     function renderQuestion() {
         const q = questions[currentIdx];
-        document.getElementById('questionText').innerText = q.text;
+        document.getElementById('mainQ').innerText = q.text;
+        document.getElementById('subQ').innerText = q.sub;
         document.getElementById('progressText').innerText = `კითხვა ${currentIdx + 1} / ${questions.length}`;
         document.getElementById('progressFill').style.width = `${((currentIdx + 1) / questions.length) * 100}%`;
 
@@ -243,14 +302,13 @@
         });
 
         document.getElementById('prevBtn').style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
-        document.getElementById('nextBtn').innerText = currentIdx === questions.length - 1 ? 'დასრულება' : 'შემდეგი →';
     }
 
     window.selectScore = (val) => {
         answers[currentIdx] = val;
         renderQuestion();
         setTimeout(nextQ, 150);
-    }
+    };
 
     window.nextQ = () => {
         if (answers[currentIdx] === null) return;
@@ -260,37 +318,36 @@
         } else {
             showResults();
         }
-    }
+    };
 
     window.prevQ = () => {
         if (currentIdx > 0) {
             currentIdx--;
             renderQuestion();
         }
-    }
+    };
 
     function showResults() {
         document.getElementById('surveyView').classList.remove('active');
         document.getElementById('resultsView').classList.add('active');
         
         const scores = {};
-        surveyData.forEach(c => scores[c.name] = { val: 0, max: c.qs.length * 4 });
-
-        answers.forEach((ans, i) => {
-            scores[questions[i].cat].val += ans;
-        });
+        surveyData.forEach(c => scores[c.name] = 0);
+        answers.forEach((ans, i) => scores[questions[i].cat] += ans);
 
         const grid = document.getElementById('resultsGrid');
-        grid.innerHTML = Object.entries(scores).map(([name, data]) => {
-            const perc = (data.val / data.max) * 100;
-            const color = perc > 40 ? '#e74c3c' : '#27ae60';
+        grid.innerHTML = Object.entries(scores).map(([name, val]) => {
+            let status = "დაბალი";
+            let color = "#27ae60";
+            if (val > 10) { status = "მსუბუქი ტენდენცია"; color = "#f1c40f"; }
+            if (val > 20) { status = "ზომიერი"; color = "#e67e22"; }
+            if (val > 30) { status = "მაღალი (კლინიკური რისკი)"; color = "#e74c3c"; }
+
             return `
-                <div class="result-card">
-                    <div style="font-weight:700; font-size:0.95rem; margin-bottom:8px;">${name}</div>
-                    <div style="font-size:1.2rem; font-weight:bold; color:var(--color-secondary);">${data.val} / ${data.max}</div>
-                    <div style="background:#eee; height:6px; border-radius:3px; margin:10px 0;">
-                        <div style="width:${perc}%; background:${color}; height:100%; border-radius:3px;"></div>
-                    </div>
+                <div class="result-card" style="border-left-color: ${color}">
+                    <div style="font-weight:bold; margin-bottom:5px;">${name}</div>
+                    <div style="font-size:1.2rem; color:var(--color-secondary); font-weight:bold;">${val} / 40</div>
+                    <div style="font-size:0.8rem; margin-top:5px; color:${color}; font-weight:bold;">${status}</div>
                 </div>
             `;
         }).join('');
