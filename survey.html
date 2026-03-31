@@ -16,14 +16,11 @@
             --color-secondary: #3498db;
             --color-accent: #e74c3c;
             --color-success: #27ae60;
-            --color-warning: #f39c12;
-            --color-danger: #c0392b;
             --color-light: #ecf0f1;
             --color-bg: #f8f9fa;
             --color-text: #2c3e50;
             --color-border: #bdc3c7;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.15);
         }
 
@@ -45,28 +42,11 @@
             text-align: center;
             color: white;
             margin-bottom: 40px;
-            animation: slideDown 0.6s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-30px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         header h1 {
             font-size: 2.5rem;
             margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .disclaimer {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 15px 20px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            border-left: 4px solid rgba(255, 255, 255, 0.5);
-            margin-top: 15px;
         }
 
         .main-content {
@@ -74,82 +54,55 @@
             border-radius: 20px;
             padding: 40px;
             box-shadow: var(--shadow-lg);
-            animation: fadeIn 0.6s ease-out 0.2s both;
         }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .view { display: none; }
-        .view.active { display: block; animation: fadeIn 0.4s ease-out; }
+        .view.active { display: block; }
 
-        /* Assessment Guide Style */
-        .assessment-guide {
+        /* Assessment Scale Guide */
+        .scale-guide {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 5px;
+            gap: 10px;
             background: var(--color-bg);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 25px;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
             border: 1px solid var(--color-border);
         }
 
         .guide-item {
             text-align: center;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: var(--color-primary);
         }
 
         .guide-num {
             display: block;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.2rem;
             color: var(--color-secondary);
         }
 
-        .question-group { margin-bottom: 30px; }
-        
-        .question-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .question-number {
-            background: var(--color-secondary);
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            flex-shrink: 0;
-            font-weight: bold;
-        }
-
-        .profile-tag {
-            font-size: 0.8rem;
-            background: #eee;
-            padding: 2px 8px;
-            border-radius: 4px;
-            color: #667eea;
-            margin-bottom: 5px;
-            display: inline-block;
+        .question-group {
+            margin-bottom: 30px;
+            text-align: center;
         }
 
         .question-text {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: var(--color-primary);
-            font-weight: 500;
+            margin-bottom: 25px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .scale-options {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             justify-content: center;
-            margin-top: 25px;
         }
 
         .scale-btn {
@@ -159,51 +112,45 @@
             background: white;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: bold;
             transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .scale-btn:hover {
             border-color: var(--color-secondary);
-            color: var(--color-secondary);
-            transform: scale(1.1);
+            transform: translateY(-3px);
         }
 
         .scale-btn.selected {
             background: var(--color-secondary);
             color: white;
             border-color: var(--color-secondary);
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
         }
 
-        /* Results & Progress */
         .progress-bar {
             width: 100%;
             height: 8px;
             background: var(--color-light);
             border-radius: 10px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             overflow: hidden;
         }
 
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.4s ease;
+            transition: width 0.3s;
         }
 
         .navigation {
             display: flex;
             justify-content: space-between;
-            margin-top: 30px;
+            margin-top: 40px;
         }
 
         .btn {
-            padding: 12px 25px;
+            padding: 12px 30px;
             border-radius: 8px;
             border: none;
             cursor: pointer;
@@ -218,24 +165,20 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 20px;
         }
 
         .result-card {
             padding: 20px;
             border-radius: 15px;
-            background: #fff;
             border: 1px solid #ddd;
-            border-top: 5px solid var(--color-secondary);
+            background: #fff;
         }
-
-        .result-card.high { border-top-color: var(--color-accent); }
 
         @media (max-width: 600px) {
             .scale-options { gap: 8px; }
-            .scale-btn { width: 45px; height: 45px; }
-            .assessment-guide { grid-template-columns: 1fr; text-align: left; }
-            .guide-item { display: flex; align-items: center; gap: 10px; padding: 2px 0; }
+            .scale-btn { width: 50px; height: 50px; }
+            .scale-guide { grid-template-columns: 1fr; text-align: left; }
+            .guide-item { display: flex; align-items: center; gap: 15px; }
         }
     </style>
 </head>
@@ -243,15 +186,14 @@
     <div class="container">
         <header>
             <h1>📋 პიროვნული კითხვარი</h1>
-            <div class="disclaimer">პასუხები შეაფასეთ 0-დან 4-მდე შკალით.</div>
         </header>
 
         <div class="main-content">
             <div id="surveyView" class="view active">
-                <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
-                <div id="progressText" style="text-align: right; margin-bottom: 10px; font-size: 0.8rem;">კითხვა 1 / 100</div>
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <div id="progressText" style="text-align: right; margin-bottom: 20px; font-size: 0.9rem;">კითხვა 1 / 100</div>
 
-                <div class="assessment-guide">
+                <div class="scale-guide">
                     <div class="guide-item"><span class="guide-num">0</span>საერთოდ არ მახასიათებს</div>
                     <div class="guide-item"><span class="guide-num">1</span>იშვიათად</div>
                     <div class="guide-item"><span class="guide-num">2</span>ზოგჯერ</div>
@@ -259,106 +201,76 @@
                     <div class="guide-item"><span class="guide-num">4</span>ყოველთვის</div>
                 </div>
 
-                <div id="surveyContent"></div>
+                <div class="question-group">
+                    <div id="questionText" class="question-text">იტვირთება...</div>
+                    <div class="scale-options">
+                        <button class="scale-btn" onclick="selectScore(0)">0</button>
+                        <button class="scale-btn" onclick="selectScore(1)">1</button>
+                        <button class="scale-btn" onclick="selectScore(2)">2</button>
+                        <button class="scale-btn" onclick="selectScore(3)">3</button>
+                        <button class="scale-btn" onclick="selectScore(4)">4</button>
+                    </div>
+                </div>
 
                 <div class="navigation">
-                    <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()">← წინა</button>
-                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">შემდეგი →</button>
+                    <button class="btn btn-secondary" id="prevBtn" onclick="prevQ()">← წინა</button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQ()">შემდეგი →</button>
                 </div>
             </div>
 
             <div id="resultsView" class="view">
-                <h2 style="text-align: center; margin-bottom: 20px;">თქვენი შედეგები</h2>
+                <h2 style="text-align: center; margin-bottom: 30px;">ანალიზის შედეგები</h2>
                 <div class="results-grid" id="resultsGrid"></div>
-                <button class="btn btn-primary" style="margin-top:30px; width:100%" onclick="location.reload()">თავიდან დაწყება</button>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 30px;" onclick="location.reload()">თავიდან დაწყება</button>
             </div>
         </div>
     </div>
 
     <script>
-        // მონაცემები იგივე რჩება
-        const surveyData = {
-            "scale": ["საერთოდ არ მახასიათებს", "იშვიათად", "ზოგჯერ", "ხშირად", "თითქმის ყოველთვის"],
-            "clusters": [
-                {
-                    "id": "A", "name": "უცნაური / ექსცენტრული",
-                    "profiles": [
-                        { "name": "პარანოიდული", "eng": "Paranoid", "questions": ["ხშირად ვეჭვობ, რომ სხვებს ჩემს მიმართ ცუდი ზრახვები აქვთ", "მიჭირს ადამიანების ნდობა, თუნდაც ახლობლების", "ნეიტრალურ ქცევაშიც კი ხშირად ვხედავ საფრთხეს", "კრიტიკას აღვიქვამ როგორც პირად შეტევას", "დიდხანს ვინახავ წყენას", "მეშინია, რომ სხვები ჩემს წინააღმდეგ გამოიყენებენ ინფორმაციას", "ხშირად ვეჭვიანობ პარტნიორზე საფუძვლის გარეშე", "მგონია, რომ სხვები ჩემს ზურგს უკან საუბრობენ", "ფრთხილად ვუზიარებ პირად ინფორმაციას", "ხშირად ვამოწმებ სხვების ქცევას შესაძლო მოტყუების ნიშნებზე"] },
-                        { "name": "შიზოიდური", "eng": "Schizoid", "questions": ["მირჩევნია მარტო ყოფნა", "იშვიათად მსურს ახლო ურთიერთობები", "ემოციური გამოხატვა შეზღუდულია ჩემში", "სექსუალური/ინტიმური ინტერესიც დაბალია", "სიამოვნებას ვიღებ მხოლოდ ინდივიდუალური აქტივობებისგან", "კრიტიკა ან ქება ნაკლებად მოქმედებს ჩემზე", "ვგრძნობ ემოციურ დისტანციას სხვებისგან", "მეგობრების ძალიან მცირე წრე მაქვს", "ხშირად ვირჩევ იზოლაციას", "სხვები ხშირად მეუბნებიან, რომ 'ცივი' ვარ"] },
-                        { "name": "შიზოტიპური", "eng": "Schizotypal", "questions": ["მაქვს უცნაური ან მაგიური რწმენები", "ხშირად ვამჩნევ 'ნიშნებს', რომლებიც თითქოს ჩემთანაა დაკავშირებული", "ჩემი აზროვნება სხვებისთვის უცნაურია", "მეტყველება ზოგჯერ არალოგიკურია", "სოციალური შფოთვა მაქვს ახლო ურთიერთობებშიც", "მაქვს უცნაური აღქმები", "ქცევა ან გარეგნობა ექსცენტრულია", "ახლო მეგობრები თითქმის არ მყავს", "სხვებს ვეჩვენები უცნაურად", "ვგრძნობ, რომ სხვები მაკვირდებიან"] }
-                    ]
-                },
-                {
-                    "id": "B", "name": "დრამატული / არასტაბილური",
-                    "profiles": [
-                        { "name": "ანტისოციალური", "eng": "Antisocial", "questions": ["წესებს ხშირად ვარღვევ", "ვმოქმედებ შედეგებზე ფიქრის გარეშე", "ადვილად ვატყუებ სხვებს", "ვმანიპულირებ ადამიანებით მიზნის მისაღწევად", "აგრესიული ქცევა მქონია", "პასუხისმგებლობას ხშირად ვერ ვიღებ", "სინანული ნაკლებად მაქვს", "რისკიანი ქცევები მიზიდავს", "სხვების უფლებებს ნაკლებად ვითვალისწინებ", "იმპულსურად ვიქცევი"] },
-                        { "name": "ბორდერლაინი", "eng": "Borderline", "questions": ["ემოციები სწრაფად მეცვლება", "მეშინია მიტოვების", "ურთიერთობები ინტენსიური და არასტაბილურია", "საკუთარი თავის აღქმა იცვლება", "იმპულსური ქცევები მაქვს", "თავს ხშირად ცარიელად ვგრძნობ", "ძლიერი ბრაზი მიჩნდება", "სტრესის დროს პარანოიდული აზრები მაქვს", "თვითდაზიანების აზრები მქონია", "უეცარი განწყობის ცვლილებები მაქვს"] },
-                        { "name": "ჰისტრიონული", "eng": "Histrionic", "questions": ["ყურადღების ცენტრში ყოფნა მსიამოვნებს", "ემოციებს დრამატულად გამოვხატავ", "ვცდილობ შთაბეჭდილების მოხდენას გარეგნობით", "სწრაფად ვერთვები ემოციურად", "ურთიერთობები ზედაპირულია", "ადვილად ვექცევი გავლენის ქვეშ", "მეტყველება ხშირად ზედაპირულია", "ემოციები სწრაფად იცვლება", "ყურადღების ნაკლებობა მაწუხებს", "სხვების შეფასება ჩემზე ძლიერ მოქმედებს"] },
-                        { "name": "ნარცისული", "eng": "Narcissistic", "questions": ["თავს განსაკუთრებულად ვთვლი", "მჭირდება აღიარება", "კრიტიკა მტკენს", "სხვებზე უპირატესობას ვგრძნობ", "ემპათია მიჭირს", "ვფიქრობ, რომ განსაკუთრებულ მოპყრობას ვიმსახურებ", "წარმატებაზე ხშირად ვფიქრობ", "ვიყენებ სხვებს მიზნისთვის", "შური მაქვს სხვების მიმართ", "სხვებს ხშირად შურთ ჩემი"] }
-                    ]
-                },
-                {
-                    "id": "C", "name": "შფოთვითი",
-                    "profiles": [
-                        { "name": "ამრიდებლური", "eng": "Avoidant", "questions": ["თავს ვარიდებ სოციალურ სიტუაციებს", "მეშინია კრიტიკის", "თავს არასრულფასოვნად ვგრძნობ", "ახალი ურთიერთობები მაშინებს", "უარყოფის შიში მაქვს", "მხოლოდ უსაფრთხო გარემოში ვიხსნები", "ხშირად თავს ვიკავებ საუბრისგან", "სოციალური შფოთვა მაწუხებს", "სხვებთან შედარებით თავს დაბლა ვაყენებ", "მეშინია დამცირების"] },
-                        { "name": "დამოკიდებული", "eng": "Dependent", "questions": ["მიჭირს დამოუკიდებელი გადაწყვეტილებების მიღება", "ხშირად ვეყრდნობი სხვებს", "მარტო ყოფნა მაშინებს", "მეშინია მხარდაჭერის დაკარგვის", "ვეთანხმები სხვებს კონფლიქტის ასარიდებლად", "ვთმობ საკუთარ საჭიროებებს", "ახალი პასუხისმგებლობა მაშინებს", "მჭირდება მუდმივი მხარდაჭერა", "ურთიერთობებში დამოკიდებული ვარ", "მეშინია მიტოვების"] },
-                        { "name": "ობსესიურ-კომპულსიური", "eng": "OCPD", "questions": ["პერფექციონიზმი მაკავებს", "დეტალებზე ზედმეტად ვფოკუსირდები", "მიჭირს დელეგირება", "წესები ჩემთვის ძალიან მნიშვნელოვანია", "მოქნილობა მიჭირს", "მუშაობას ვანიჭებ უპირატესობას დასვენებაზე", "კონტროლის დაკარგვა მაშინებს", "სტანდარტები ძალიან მაღალი მაქვს", "სხვებისგანაც სრულყოფილებას ველი", "წესრიგი ჩემთვის აუცილებელია"] }
-                    ]
-                }
-            ]
-        };
+        const rawData = [
+            { name: "პარანოიდული", qs: ["ხშირად ვეჭვობ, რომ სხვებს ჩემს მიმართ ცუდი ზრახვები აქვთ", "მიჭირს ადამიანების ნდობა, თუნდაც ახლობლების", "ნეიტრალურ ქცევაშიც კი ხშირად ვხედავ საფრთხეს", "კრიტიკას აღვიქვამ როგორც პირად შეტევას", "დიდხანს ვინახავ წყენას", "მეშინია, რომ სხვები ჩემს წინააღმდეგ გამოიყენებენ ინფორმაციას", "ხშირად ვეჭვიანობ პარტნიორზე საფუძვლის გარეშე", "მგონია, რომ სხვები ჩემს ზურგს უკან საუბრობენ", "ფრთხილად ვუზიარებ პირად ინფორმაციას", "ხშირად ვამოწმებ სხვების ქცევას შესაძლო მოტყუების ნიშნებზე"] },
+            { name: "შიზოიდური", qs: ["მირჩევნია მარტო ყოფნა", "იშვიათად მსურს ახლო ურთიერთობები", "ემოციური გამოხატვა შეზღუდულია ჩემში", "სექსუალური ინტერესი დაბალია", "სიამოვნებას ვიღებ მხოლოდ მარტო ყოფნისას", "კრიტიკა ან ქება ნაკლებად მოქმედებს ჩემზე", "ვგრძნობ ემოციურ დისტანციას სხვებისგან", "მეგობრების ძალიან მცირე წრე მაქვს", "ხშირად ვირჩევ იზოლაციას", "სხვები მეუბნებიან, რომ 'ცივი' ვარ"] },
+            { name: "შიზოტიპური", qs: ["მაქვს უცნაური ან მაგიური რწმენები", "ვამჩნევ 'ნიშნებს', რომლებიც თითქოს ჩემთანაა დაკავშირებული", "ჩემი აზროვნება სხვებისთვის უცნაურია", "მეტყველება ზოგჯერ არალოგიკურია", "სოციალური შფოთვა მაქვს ურთიერთობებში", "მაქვს უცნაური აღქმები", "ქცევა ან გარეგნობა ექსცენტრულია", "ახლო მეგობრები თითქმის არ მყავს", "სხვებს ვეჩვენები უცნაურად", "ვგრძნობ, რომ სხვები მაკვირდებიან"] },
+            { name: "ანტისოციალური", qs: ["წესებს ხშირად ვარღვევ", "ვმოქმედებ შედეგებზე ფიქრის გარეშე", "ადვილად ვატყუებ სხვებს", "ვმანიპულირებ ადამიანებით", "აგრესიული ქცევა მქონია", "პასუხისმგებლობას ხშირად ვერ ვიღებ", "სინანული ნაკლებად მაქვს", "რისკიანი ქცევები მიზიდავს", "სხვების უფლებებს ნაკლებად ვითვალისწინებ", "იმპულსურად ვიქცევი"] },
+            { name: "ბორდერლაინი", qs: ["ემოციები სწრაფად მეცვლება", "მეშინია მიტოვების", "ურთიერთობები ინტენსიური და არასტაბილურია", "საკუთარი თავის აღქმა იცვლება", "იმპულსური ქცევები მაქვს", "თავს ხშირად ცარიელად ვგრძნობ", "ძლიერი ბრაზი მიჩნდება", "სტრესის დროს პარანოიდული აზრები მაქვს", "თვითდაზიანების აზრები მქონია", "უეცარი განწყობის ცვლილებები მაქვს"] },
+            { name: "ჰისტრიონული", qs: ["ყურადღების ცენტრში ყოფნა მსიამოვნებს", "ემოციებს დრამატულად გამოვხატავ", "ვცდილობ შთაბეჭდილების მოხდენას გარეგნობით", "სწრაფად ვერთვები ემოციურად", "ურთიერთობები ზედაპირულია", "ადვილად ვექცევი გავლენის ქვეშ", "მეტყველება ხშირად ზედაპირულია", "ემოციები სწრაფად იცვლება", "ყურადღების ნაკლებობა მაწუხებს", "სხვების შეფასება ჩემზე მოქმედებს"] },
+            { name: "ნარცისული", qs: ["თავს განსაკუთრებულად ვთვლი", "მჭირდება აღიარება", "კრიტიკა მტკენს", "სხვებზე უპირატესობას ვგრძნობ", "ემპათია მიჭირს", "ვფიქრობ, განსაკუთრებულ მოპყრობას ვიმსახურებ", "წარმატებაზე ხშირად ვფიქრობ", "ვიყენებ სხვებს მიზნისთვის", "შური მაქვს სხვების მიმართ", "სხვებს შურთ ჩემი"] },
+            { name: "ამრიდებლური", qs: ["თავს ვარიდებ სოციალურ სიტუაციებს", "მეშინია კრიტიკის", "თავს არასრულფასოვნად ვგრძნობ", "ახალი ურთიერთობები მაშინებს", "უარყოფის შიში მაქვს", "მხოლოდ უსაფრთხო გარემოში ვიხსნები", "ხშირად თავს ვიკავებ საუბრისგან", "სოციალური შფოთვა მაწუხებს", "თავს სხვებზე დაბლა ვაყენებ", "მეშინია დამცირების"] },
+            { name: "დამოკიდებული", qs: ["მიჭირს დამოუკიდებელი გადაწყვეტილებები", "ხშირად ვეყრდნობი სხვებს", "მარტო ყოფნა მაშინებს", "მეშინია მხარდაჭერის დაკარგვის", "ვეთანხმები სხვებს კონფლიქტის ასარიდებლად", "ვთმობ საკუთარ საჭიროებებს", "ახალი პასუხისმგებლობა მაშინებს", "მჭირდება მუდმივი მხარდაჭერა", "ურთიერთობებში დამოკიდებული ვარ", "მეშინია მიტოვების"] },
+            { name: "ობსესიური", qs: ["პერფექციონიზმი მაკავებს", "დეტალებზე ზედმეტად ვფოკუსირდები", "მიჭირს დელეგირება", "წესები ჩემთვის ძალიან მნიშვნელოვანია", "მოქნილობა მიჭირს", "მუშაობას ვანიჭებ უპირატესობას", "კონტროლის დაკარგვა მაშინებს", "სტანდარტები მაღალი მაქვს", "სხვებისგან სრულყოფილებას ველი", "წესრიგი აუცილებელია"] }
+        ];
+
+        let questions = [];
+        rawData.forEach(category => {
+            category.qs.forEach(q => questions.push({ text: q, catName: category.name }));
+        });
 
         let currentIdx = 0;
-        let allQuestions = [];
-        let userAnswers = [];
-
-        function init() {
-            surveyData.clusters.forEach(c => {
-                c.profiles.forEach(p => {
-                    p.questions.forEach(q => {
-                        allQuestions.push({ text: q, profile: p.name, eng: p.eng });
-                    });
-                });
-            });
-            userAnswers = new Array(allQuestions.length).fill(null);
-            render();
-        }
+        let answers = new Array(questions.length).fill(null);
 
         function render() {
-            const q = allQuestions[currentIdx];
-            const container = document.getElementById('surveyContent');
+            document.getElementById('questionText').innerText = questions[currentIdx].text;
+            document.getElementById('progressText').innerText = `კითხვა ${currentIdx + 1} / ${questions.length}`;
+            document.getElementById('progressFill').style.width = `${((currentIdx + 1) / questions.length) * 100}%`;
             
-            document.getElementById('progressFill').style.width = `${(currentIdx / allQuestions.length) * 100}%`;
-            document.getElementById('progressText').innerText = `კითხვა ${currentIdx + 1} / ${allQuestions.length}`;
-
-            container.innerHTML = `
-                <div class="question-group">
-                    <div class="profile-tag">${q.profile} (${q.eng})</div>
-                    <div class="question-header">
-                        <div class="question-number">${currentIdx + 1}</div>
-                        <div class="question-text">${q.text}</div>
-                    </div>
-                    <div class="scale-options">
-                        ${[0, 1, 2, 3, 4].map(num => `
-                            <button class="scale-btn ${userAnswers[currentIdx] === num ? 'selected' : ''}" 
-                                    onclick="select(${num})">${num}</button>
-                        `).join('')}
-                    </div>
-                </div>
-            `;
+            const btns = document.querySelectorAll('.scale-btn');
+            btns.forEach((btn, i) => {
+                btn.classList.toggle('selected', answers[currentIdx] === i);
+            });
 
             document.getElementById('prevBtn').style.visibility = currentIdx === 0 ? 'hidden' : 'visible';
-            document.getElementById('nextBtn').innerText = currentIdx === allQuestions.length - 1 ? 'შედეგები' : 'შემდეგი →';
+            document.getElementById('nextBtn').innerText = currentIdx === questions.length - 1 ? 'დასრულება' : 'შემდეგი →';
         }
 
-        window.select = function(val) {
-            userAnswers[currentIdx] = val;
-            setTimeout(nextQuestion, 200);
+        window.selectScore = (val) => {
+            answers[currentIdx] = val;
+            render();
+            setTimeout(nextQ, 200);
         };
 
-        window.nextQuestion = function() {
-            if (userAnswers[currentIdx] === null) return alert("გთხოვთ აირჩიოთ შეფასება 0-დან 4-მდე");
-            if (currentIdx < allQuestions.length - 1) {
+        window.nextQ = () => {
+            if (answers[currentIdx] === null) return;
+            if (currentIdx < questions.length - 1) {
                 currentIdx++;
                 render();
             } else {
@@ -366,7 +278,7 @@
             }
         };
 
-        window.prevQuestion = function() {
+        window.prevQ = () => {
             if (currentIdx > 0) {
                 currentIdx--;
                 render();
@@ -377,38 +289,30 @@
             document.getElementById('surveyView').classList.remove('active');
             document.getElementById('resultsView').classList.add('active');
             
-            const results = {};
-            let globalIdx = 0;
-            
-            surveyData.clusters.forEach(c => {
-                c.profiles.forEach(p => {
-                    let score = 0;
-                    p.questions.forEach(() => {
-                        score += userAnswers[globalIdx] || 0;
-                        globalIdx++;
-                    });
-                    results[p.name] = { score, max: p.questions.length * 4 };
-                });
+            const categoryScores = {};
+            rawData.forEach(c => categoryScores[c.name] = { score: 0, max: c.qs.length * 4 });
+
+            answers.forEach((ans, i) => {
+                const cat = questions[i].catName;
+                categoryScores[cat].score += ans;
             });
 
             const grid = document.getElementById('resultsGrid');
-            grid.innerHTML = Object.entries(results).map(([name, data]) => {
-                const percent = (data.score / data.max) * 100;
-                const isHigh = percent > 30;
+            grid.innerHTML = Object.entries(categoryScores).map(([name, data]) => {
+                const perc = (data.score / data.max) * 100;
                 return `
-                    <div class="result-card ${isHigh ? 'high' : ''}">
-                        <h4 style="margin-bottom:10px">${name}</h4>
-                        <div style="font-size:1.5rem; font-weight:bold; color:var(--color-secondary)">${data.score} <small>/ ${data.max}</small></div>
-                        <div style="background:#eee; height:5px; border-radius:5px; margin:10px 0">
-                            <div style="width:${percent}%; background:${isHigh ? 'red' : 'green'}; height:100%; border-radius:5px"></div>
+                    <div class="result-card">
+                        <div style="font-weight: bold; margin-bottom: 10px;">${name}</div>
+                        <div style="font-size: 1.2rem; color: var(--color-secondary);">${data.score} / ${data.max}</div>
+                        <div style="background: #eee; height: 6px; border-radius: 3px; margin: 10px 0;">
+                            <div style="width: ${perc}%; background: ${perc > 35 ? 'var(--color-accent)' : 'var(--color-success)'}; height: 100%; border-radius: 3px;"></div>
                         </div>
-                        <div style="font-size:0.8rem">${isHigh ? '⚠️ ყურადსაღები მაჩვენებელი' : '✅ ნორმის ფარგლებში'}</div>
                     </div>
                 `;
             }).join('');
         }
 
-        init();
+        render();
     </script>
 </body>
 </html>
